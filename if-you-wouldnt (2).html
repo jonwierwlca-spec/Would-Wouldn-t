@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If You Wouldn't – Spicy Drinking Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        :root {
+            --red: #ff2d55;
+            --dark: #1a1a2e;
+            --accent: #ff9f1c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Press Start 2P', system-ui;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--red);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .rules {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 3px solid var(--red);
+        }
+        
+        .rules h2 {
+            color: var(--red);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .tab.active {
+            background: var(--red);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 15px var(--red);
+        }
+        
+        .prompt-card {
+            background: #0f0f1e;
+            border: 4px solid var(--accent);
+            border-radius: 15px;
+            padding: 40px 30px;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.35rem;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        
+        .prompt-text {
+            max-width: 90%;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            font-family: 'Press Start 2P', system-ui;
+            padding: 15px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-next {
+            background: var(--accent);
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .btn-next:hover {
+            transform: scale(1.05);
+            background: #ffbb4d;
+        }
+        
+        .action-btn {
+            background: var(--red);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            background: #ff5c7a;
+        }
+        
+        .drink-log {
+            margin-top: 40px;
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .drink-log h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .log-entry {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            font-size: 0.75rem;
+        }
+        
+        .log-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (min-width: 700px) {
+            .log-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+        
+        .log-column {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        
+        .log-column-header {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255,255,255,0.15);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            text-align: center;
+            border: 4px solid var(--red);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>IF YOU WOULDN'T</h1>
+            <p class="subtitle">Spicy Couples Drinking Game 🔥</p>
+        </header>
+
+        <div class="rules">
+            <h2>Rules</h2>
+            <strong>Answer for yourself:</strong><br>
+            • <strong>Wouldn't do it</strong> → You take 1 drink<br>
+            • <strong>Would do it</strong> → Do nothing<br>
+            • <strong>WILL do it</strong> → Your partner takes 1 drink<br>
+            • <strong>WON'T do it</strong> → You take 2 drinks
+        </div>
+
+        <div class="category-tabs" id="tabs">
+            <!-- Tabs populated by JS -->
+        </div>
+
+        <div class="prompt-card" id="promptCard">
+            <div class="prompt-text" id="promptText">
+                Click "Next Prompt" to start the game!
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-next" onclick="nextPrompt()">NEXT PROMPT</button>
+            <button class="action-btn" onclick="showActionModal()">I Answered</button>
+        </div>
+
+        <div class="drink-log">
+            <h3>Drink Log</h3>
+            <div class="log-grid">
+                <div class="log-column">
+                    <div class="log-column-header" style="color:#4ade80;">✅ Would</div>
+                    <div id="logWould"></div>
+                </div>
+                <div class="log-column">
+                    <div class="log-column-header" style="color:#ff2d55;">🍺 Wouldn't</div>
+                    <div id="logWouldnt"></div>
+                </div>
+                <div class="log-column">
+                    <div class="log-column-header" style="color:#60a5fa;">🔥 WILL</div>
+                    <div id="logWill"></div>
+                </div>
+                <div class="log-column">
+                    <div class="log-column-header" style="color:#f59e0b;">🍺🍺 WON'T</div>
+                    <div id="logWont"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Modal -->
+    <div class="modal" id="actionModal">
+        <div class="modal-content">
+            <h2>What did you choose?</h2>
+            <p id="currentPromptInModal"></p>
+            
+            <div style="margin: 25px 0; display: grid; gap: 12px;">
+                <button onclick="logAnswer(1)" style="background:#ff2d55; padding:12px;">Wouldn't → I take 1</button>
+                <button onclick="logAnswer(2)" style="background:#4ade80; padding:12px; color:#000;">Would → Nothing</button>
+                <button onclick="logAnswer(3)" style="background:#60a5fa; padding:12px;">WILL → Partner takes 1</button>
+                <button onclick="logAnswer(4)" style="background:#f59e0b; padding:12px;">WON'T → I take 2</button>
+            </div>
+            
+            <button onclick="closeModal()" style="background:#666; padding:10px 25px; margin-top:10px;">Cancel</button>
+        </div>
+    </div>
+
+    <footer>
+        Made for fun • Drink responsibly • Play safe
+    </footer>
+
+    <script>
+        // All prompts organized by category
+        const categories = {
+            "Risky & Public": [
+                "Have sex in the back of a taxi/Uber",
+                "Make out heavily in an elevator",
+                "Fool around in a movie theater (not just hands)",
+                "Have sex on a beach at night",
+                "Go skinny dipping in a public pool/hot tub",
+                "Flash your partner in a crowded bar",
+                "Have sex in a semi-public place (car, park)",
+                "Have sex with the curtains wide open in a hotel"
+            ],
+            "At-Home Heat": [
+                "Have sex on the kitchen counter while dinner is cooking",
+                "Fuck in the shower while getting ready for work",
+                "Do it doggy-style while folding laundry",
+                "Have a quickie right before guests arrive",
+                "Have sex in the recliner during the football game",
+                "Have sex in a common area of the house",
+                "Wake up your partner with oral sex"
+            ],
+            "Kink & Power": [
+                "Let your partner tie you up and tease you",
+                "Blindfold your partner and use ice/feathers",
+                "Spank your partner (or get spanked)",
+                "Wear restraints while your partner pleasures you",
+                "Use a remote control toy in public",
+                "Try light choking/breath play",
+                "Give your partner oral while they're on the phone"
+            ],
+            "Dirty Talk & Sexting": [
+                "Send extremely sexy texts while at work",
+                "Talk extremely dirty the entire time during sex",
+                "Record a sexy voice note for your partner",
+                "Moan loudly on purpose in a hotel with thin walls",
+                "Call customer service and flirt while your partner listens",
+                "Talk in a foreign accent during sex"
+            ],
+            "Toys & Props": [
+                "Use a vibrator on your partner during foreplay",
+                "Try edible underwear or body paint",
+                "Play strip poker — loser does whatever winner wants",
+                "Lick whipped cream off your partner",
+                "Masturbate in front of your partner while they whisper in your ear"
+            ],
+            "Exhibitionist": [
+                "Have sex in front of a mirror so you both can watch",
+                "Send your partner a nude while they're in a meeting",
+                "Watch each other masturbate from across the room",
+                "Do a sexy naked dance for your partner",
+                "Have sex somewhere in your parents' house"
+            ],
+            "Roleplay & Wild": [
+                "Roleplay as boss and naughty employee",
+                "Pretend you're having a one-night stand at a hotel",
+                "Go to a bar and hit on a stranger (but it goes nowhere)",
+                "Act out a scene from a movie or porn you both like",
+                "Try anal (giving or receiving)",
+                "Let your partner pick your outfit for the whole day"
+            ]
+        };
+
+        let currentCategory = "Risky & Public";
+        let randomMode = false;
+        let currentPrompt = "";
+        let usedPrompts = new Set();
+        let drinkHistory = { would: [], wouldnt: [], will: [], wont: [] };
+
+        // Create category tabs
+        function createTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            tabsContainer.innerHTML = '';
+            
+            // Random tab
+            const randomTab = document.createElement('div');
+            randomTab.className = `tab ${randomMode ? 'active' : ''}`;
+            randomTab.textContent = '🎲 Random';
+            randomTab.onclick = () => {
+                randomMode = true;
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                randomTab.classList.add('active');
+                nextPrompt();
+            };
+            tabsContainer.appendChild(randomTab);
+            
+            Object.keys(categories).forEach(cat => {
+                const tab = document.createElement('div');
+                tab.className = `tab ${!randomMode && cat === currentCategory ? 'active' : ''}`;
+                tab.textContent = cat;
+                tab.onclick = () => {
+                    randomMode = false;
+                    currentCategory = cat;
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    nextPrompt();
+                };
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        // Get a random unused prompt from current category
+        function getRandomPrompt() {
+            const prompts = categories[currentCategory];
+            const available = prompts.filter(p => !usedPrompts.has(p));
+            
+            if (available.length === 0) {
+                usedPrompts.clear(); // Reset if all used
+                return prompts[Math.floor(Math.random() * prompts.length)];
+            }
+            
+            const prompt = available[Math.floor(Math.random() * available.length)];
+            usedPrompts.add(prompt);
+            return prompt;
+        }
+
+        function nextPrompt() {
+            if (randomMode) {
+                const cats = Object.keys(categories);
+                currentCategory = cats[Math.floor(Math.random() * cats.length)];
+            }
+            currentPrompt = getRandomPrompt();
+            document.getElementById('promptText').innerHTML = `<strong>${currentCategory}</strong><br><br>${currentPrompt}`;
+        }
+
+        function showActionModal() {
+            if (!currentPrompt) {
+                alert("Click Next Prompt first!");
+                return;
+            }
+            document.getElementById('currentPromptInModal').textContent = currentPrompt;
+            document.getElementById('actionModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('actionModal').style.display = 'none';
+        }
+
+        function logAnswer(choice) {
+            switch(choice) {
+                case 1:
+                    drinkHistory.wouldnt.unshift(currentPrompt);
+                    break;
+                case 2:
+                    drinkHistory.would.unshift(currentPrompt);
+                    break;
+                case 3:
+                    drinkHistory.will.unshift(currentPrompt);
+                    break;
+                case 4:
+                    drinkHistory.wont.unshift(currentPrompt);
+                    break;
+            }
+            
+            renderLog();
+            closeModal();
+            // Auto next after answering
+            setTimeout(nextPrompt, 800);
+        }
+
+        function renderLog() {
+            const render = (id, items) => {
+                document.getElementById(id).innerHTML = items.map(entry => 
+                    `<div class="log-entry">${entry}</div>`
+                ).join('') || '<div class="log-entry" style="opacity:0.3;">—</div>';
+            };
+            render('logWould', drinkHistory.would);
+            render('logWouldnt', drinkHistory.wouldnt);
+            render('logWill', drinkHistory.will);
+            render('logWont', drinkHistory.wont);
+        }
+
+        // Initialize the game
+        window.onload = function() {
+            createTabs();
+            nextPrompt();
+            renderLog();
+        };
+    </script>
+</body>
+</html>
