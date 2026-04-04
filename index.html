@@ -134,7 +134,6 @@
             <div class="tokens-info">
                 🎯 Each partner starts with <strong>2 Tokens</strong>.<br>
                 🏆 First to <strong>4 Tokens</strong> wins.<br>
-            
             </div>
         </div>
 
@@ -245,7 +244,7 @@
 
     <footer>Made for fun • Drink responsibly • Play safe</footer>
 
-    <sc` + `ript>
+    <script>
         const categories = {
             "Risky & Public": [
                 "Have sex in the back of a taxi/Uber","Make out heavily in an elevator","Fool around in a movie theater (not just hands)","Have sex on a beach at night","Go skinny dipping in a public pool/hot tub","Flash your partner in a crowded bar","Have sex in a semi-public place (car, park)","Have sex with the curtains wide open in a hotel","Have sex in a fitting room at a store","Make out in the back row of a concert or movie theater","Finger or stroke your partner under the table at a restaurant","Have quickie sex in a public restroom","Go commando and let your partner touch you in public","Have sex against a window in a high-rise hotel","Get a handjob while driving on the highway","Make out passionately in a crowded elevator","Have sex in the stairwell of an apartment building","Flash your partner while walking down a busy street","Have sex on a hiking trail during the day","Fool around in the back of a movie theater balcony","Give oral in a parked car in a busy parking lot","Have sex on a rooftop at night","Get fingered in the back of a bus or train","Make out heavily at a club or bar while people are around","Have sex in a changing room at the mall","Go skinny dipping at a public beach at night","Have your partner wear a remote vibrator while shopping","Get felt up in a crowded movie theater","Have sex in an alley behind a bar","Take nude photos in a semi-public park at dusk"
@@ -267,6 +266,38 @@
             ],
             "Roleplay & Wild": [
                 "Roleplay as boss and employee doing a sexy performance review","Pretend you're having a one-night stand at a hotel","Go to a bar and hit on a stranger while your partner watches (but it goes nowhere)","Act out a scene from a porn you've watched together","Try anal","Roleplay as a hotel employee who walks in on a sleeping naked and horny client","Pretend to be a nurse who walks in on a masturbating client","Roleplay as a shopper who needs help in the changing room"
+            ],
+            "Wild and Silly": [
+                "Give your partner a lap dance using only the worst dance moves you know for 30 seconds",
+                "Undress each other using only your teeth while trying not to laugh",
+                "Perform a sexy belly dance but make it as ridiculous and clumsy as possible",
+                "Put an ice cube in your underwear and keep it there until it melts while maintaining eye contact",
+                "Give your partner a massage using only your elbows and knees",
+                "Recreate your best (or worst) orgasm face while moaning dramatically in slow motion",
+                "Blindfold your partner and feed them a snack using only your feet",
+                "Talk dirty to each other but only using terrible food puns for one full minute",
+                "Strut around the room like a runway model wearing your partner's most ridiculous clothing item",
+                "Attempt to remove one piece of clothing from your partner using only your mouth",
+                "Give each other a foot massage while speaking in the worst fake accents you can manage",
+                "Act out a dramatic love scene from a cheesy movie but replace all the lines with silly sound effects",
+                "Whisper the filthiest compliment you can think of into your partner's ear in a cartoon voice",
+                "Try to give your partner a hickey while both of you are laughing uncontrollably",
+                "Perform a slow striptease but stop every 10 seconds to do a silly dance move",
+                "Blindfold yourself and try to kiss your partner on three different body parts they choose",
+                "Make up and sing a ridiculous love song about your partner's butt or favorite body part",
+                "Put whipped cream (or chocolate sauce) on your partner's body and eat it off using only your tongue — but make silly animal noises the whole time",
+                "Give your partner a 'professional' lap dance while narrating it like a sports commentator",
+                "Swap underwear with each other and wear them on your head like hats for two minutes",
+                "Attempt to seduce your partner by doing the world's worst impression of a sexy movie star",
+                "Draw a silly portrait of your partner's naked body on their stomach using washable marker",
+                "Give each other a back massage but only using your butt cheeks (clothes on is fine)",
+                "Recreate your first kiss but make it as over-the-top and cartoonish as possible",
+                "Speak only in moans and groans for the next three minutes while trying to have a normal conversation",
+                "Try to take off your own pants while doing the chicken dance",
+                "Blindfold your partner and guide them around the room using only kisses as directions",
+                "Make the silliest orgasm face contest — winner gets to choose the next dare",
+                "Give your partner a 'sexy' haircut using only your fingers and dramatic hair-flipping",
+                "Act like you're in a terrible porno but replace all the dirty talk with dad jokes"
             ]
         };
 
@@ -282,13 +313,25 @@
             const randomTab = document.createElement('div');
             randomTab.className = 'tab ' + (randomMode ? 'active' : '');
             randomTab.textContent = '🎲 Random';
-            randomTab.onclick = () => { randomMode = true; document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); randomTab.classList.add('active'); nextPrompt(); };
+            randomTab.onclick = () => { 
+                randomMode = true; 
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
+                randomTab.classList.add('active'); 
+                nextPrompt(); 
+            };
             tabsContainer.appendChild(randomTab);
+
             Object.keys(categories).forEach(cat => {
                 const tab = document.createElement('div');
                 tab.className = 'tab ' + (!randomMode && cat === currentCategory ? 'active' : '');
                 tab.textContent = cat;
-                tab.onclick = () => { randomMode = false; currentCategory = cat; document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); nextPrompt(); };
+                tab.onclick = () => { 
+                    randomMode = false; 
+                    currentCategory = cat; 
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
+                    tab.classList.add('active'); 
+                    nextPrompt(); 
+                };
                 tabsContainer.appendChild(tab);
             });
         }
@@ -303,7 +346,10 @@
                 prompts = categories[currentCategory];
             }
             const available = prompts.filter(p => !usedPrompts.has(p));
-            if (available.length === 0) { usedPrompts.clear(); return prompts[Math.floor(Math.random() * prompts.length)]; }
+            if (available.length === 0) { 
+                usedPrompts.clear(); 
+                return prompts[Math.floor(Math.random() * prompts.length)]; 
+            }
             const prompt = available[Math.floor(Math.random() * available.length)];
             usedPrompts.add(prompt);
             return prompt;
@@ -315,15 +361,23 @@
         }
 
         function showActionModal() {
-            if (!currentPrompt) { alert("Click NEXT PROMPT first!"); return; }
+            if (!currentPrompt) { 
+                alert("Click NEXT PROMPT first!"); 
+                return; 
+            }
             document.getElementById('currentPromptInModal').textContent = currentPrompt;
             document.getElementById('actionModal').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('actionModal').style.display = 'none'; }
+        function closeModal() { 
+            document.getElementById('actionModal').style.display = 'none'; 
+        }
 
         function logAnswer(choice) {
-            if (choice === 3) { willList.unshift(currentPrompt); renderWillLog(); }
+            if (choice === 3) { 
+                willList.unshift(currentPrompt); 
+                renderWillLog(); 
+            }
             closeModal();
             setTimeout(nextPrompt, 600);
         }
@@ -335,7 +389,10 @@
         }
 
         function copyWillList() {
-            if (willList.length === 0) { alert("Nothing to copy yet!"); return; }
+            if (willList.length === 0) { 
+                alert("Nothing to copy yet!"); 
+                return; 
+            }
             navigator.clipboard.writeText(willList.join('\\n')).then(() => {
                 const btn = document.getElementById('copyBtn');
                 const orig = btn.textContent;
@@ -344,8 +401,12 @@
             });
         }
 
-        window.onload = function() { createTabs(); nextPrompt(); renderWillLog(); };
-    </sc` + `ript>
+        window.onload = function() { 
+            createTabs(); 
+            nextPrompt(); 
+            renderWillLog(); 
+        };
+    </script>
 </body>
 </html>`;
 
